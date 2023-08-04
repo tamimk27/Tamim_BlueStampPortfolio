@@ -35,11 +35,7 @@ For your final milestone, explain the outcome of your project. Key details to in
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/y3VAmNlER5Y" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
-For your second milestone, explain what you've worked on since your previous milestone. You can highlight:
-- Technical details of what you've accomplished and how they contribute to the final goal
-- What has been surprising about the project so far
-- Previous challenges you faced that you overcame
-- What needs to be completed before your final milestone 
+For my second milestone I worked on using the IR remote that the kit came with and having it control where the tank goes. I managed to accomplish this by programming it in which I looked at the examples that was given from the documentation in which it shows how the motors goes and it also provided the hexadecimals for the inputs on the remote. With those inputs I had saved them into a variable and made if statements for if this button was pressed it would go this certain way. What was surprising to me is that there was a data type that I wasn't aware of which I had to use for the inputs which was long as it is for hexadecimals as those are huge numbers to store. Besides that, another challenge I had to deal with was with my motor screw being loose with one of the wheels but I managed get that fixed just fine as it seemed that I didn't do it correctly while assemblying it. For my next milestone I hope to work with the LED panel and also have that respond to inputs just like the motors.
 
 # First Milestone
 
