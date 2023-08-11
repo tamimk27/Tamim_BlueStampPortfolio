@@ -42,16 +42,161 @@ Here's where you'll put images of your schematics. [Tinkercad](https://www.tinke
 Here's where you'll put your code. The syntax below places it into a block of code. Follow the guide [here]([url](https://www.markdownguide.org/extended-syntax/)) to learn how to customize it to your project needs. 
 
 ```c++
+/* keyestudio Mini Tank Robot V2
+lesson 6.2
+IRremote
+http://www.keyestudio.com
+*/
+#include <IRremoteTank.h>
+
+int RECV_PIN = A0; //define the pin of IR receiver as A0
+int LED_PIN = 10; //define the pin of LED
+
+#define SCL_Pin A5 //Set clock pin to A5
+#define SDA_Pin A4 //Set data pin to A4
+
+
+IRrecv irrecv(RECV_PIN);
+decode_results results;
+#define ML_Ctrl 13 //define the direction control pin of left motor
+#define ML_PWM 11 //define the PWM control pin of left motor
+#define MR_Ctrl 12 //define direction control pin of right motor
+#define MR_PWM 3 // define the PWM control pin of right motor
+long up = 0xFF629D;
+long left = 0xFF22DD;
+long right = 0xFFC23D;
+long down = 0xFFA857;
+long stop = 0xFF02FD;
+long one = 0xFF6897;
+long two = 0xFF9867;
+long three = 0xFFB04F;
+long five = 0xFF18E7;
+unsigned char pattern[] = {0x01, 0xff, 0x01, 0xe1, 0x21, 0x41, 0x21, 0xc1, 0x01, 0xe9, 0x04, 0xe6, 0x25, 0x46, 0x24, 0xc8};
+unsigned char clear[] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};;
+unsigned char smile[] ={0x3c, 0x42, 0x95, 0xa1, 0xa1, 0x95, 0x42, 0x3c, 0x3c, 0x42, 0x95, 0xa1, 0xa1, 0x95, 0x42, 0x3c};
+unsigned char hello[] ={0x7c, 0x10, 0x7c, 0x00, 0x7c, 0x54, 0x54, 0x00, 0x7c, 0x40, 0x00, 0x7c, 0x40, 0x38, 0x44, 0x38};
+
+
+
 void setup() {
-  // put your setup code here, to run once:
-  Serial.begin(9600);
-  Serial.println("Hello World!");
-}
+    Serial.begin(9600);
+    irrecv.enableIRIn(); // Initialize the IR receiver 
+    pinMode(LED_PIN, OUTPUT); //set LED_pin to OUTPUT
+    pinMode(ML_Ctrl, OUTPUT); //define direction control pin of left motor as output
+    pinMode(ML_PWM, OUTPUT); //define PWM control pin of left motor as output
+    pinMode(MR_Ctrl, OUTPUT); //define direction control pin of right motor as output.
+    pinMode(MR_PWM, OUTPUT); //define the PWM control pin of right motor as output
+    pinMode(SCL_Pin, OUTPUT);
+    pinMode(SDA_Pin, OUTPUT);
 
+}
 void loop() {
-  // put your main code here, to run repeatedly:
 
+
+    if (irrecv.decode( & results)) {
+        if (results.value == up) // according to the above key value, press“OK”on remote control , LED will be controlled
+        {
+            digitalWrite(MR_Ctrl, LOW);
+            analogWrite(MR_PWM, 200);
+            digitalWrite(ML_Ctrl, LOW);
+            analogWrite(ML_PWM, 200);
+        } else if (results.value == down) {
+            digitalWrite(MR_Ctrl, HIGH);
+            analogWrite(MR_PWM, 200);
+            digitalWrite(ML_Ctrl, HIGH);
+            analogWrite(ML_PWM, 200);
+        } else if (results.value == left) {
+            digitalWrite(MR_Ctrl, LOW);
+            analogWrite(MR_PWM, 170);
+            digitalWrite(ML_Ctrl, HIGH);
+            analogWrite(ML_PWM, 170);
+        } else if (results.value == right) {
+            digitalWrite(MR_Ctrl, HIGH);
+            analogWrite(MR_PWM, 170);
+            digitalWrite(ML_Ctrl, LOW);
+            analogWrite(ML_PWM, 170);
+
+        } else if (results.value == stop) {
+
+            digitalWrite(MR_Ctrl, LOW);
+            analogWrite(MR_PWM, 0);
+            digitalWrite(ML_Ctrl, LOW);
+            analogWrite(ML_PWM, 0);
+        } else if (results.value == one) {
+            matrix_display(pattern);
+        } else if (results.value == five) {
+            matrix_display(clear);
+        } else if (results.value == two) {
+            matrix_display(smile);
+        } else if (results.value == three) {
+            matrix_display(hello);
+        }
+
+
+
+
+        irrecv.resume(); //receive the next value
+    }
 }
+
+
+// this function is used for dot matrix display 
+void matrix_display(unsigned char matrix_value[]) {
+    IIC_start();
+    IIC_send(0xc0); //Choose address
+
+    for (int i = 0; i < 16; i++) //pattern data has 16 bits
+    {
+        IIC_send(matrix_value[i]); //convey the pattern data
+    }
+    IIC_end(); //end the transmission of pattern data
+    IIC_start();
+    IIC_send(0x8A); //display control, set pulse width to 4/16
+    IIC_end();
+}
+//The condition starting to transmit data
+void IIC_start() {
+    digitalWrite(SCL_Pin, HIGH);
+    delayMicroseconds(3);
+    digitalWrite(SDA_Pin, HIGH);
+    delayMicroseconds(3);
+    digitalWrite(SDA_Pin, LOW);
+    delayMicroseconds(3);
+}
+//convey data
+void IIC_send(unsigned char send_data) {
+    for (char i = 0; i < 8; i++) //each byte has 8 bits
+    {
+        digitalWrite(SCL_Pin, LOW); //pull down clock pin SCL Pin to change the signals of SDA
+        delayMicroseconds(3);
+        if (send_data & 0x01) //set high and low level of SDA_Pin according to 1 or 0 of every bit
+        {
+            digitalWrite(SDA_Pin, HIGH);
+        } else {
+            digitalWrite(SDA_Pin, LOW);
+        }
+        delayMicroseconds(3);
+        digitalWrite(SCL_Pin, HIGH); //pull up clock pin SCL_Pin to stop transmitting data
+        delayMicroseconds(3);
+        send_data = send_data >> 1; // detect bit by bit, so move the data right by one
+    }
+}
+//The sign that data transmission ends
+void IIC_end() {
+    digitalWrite(SCL_Pin, LOW);
+    delayMicroseconds(3);
+    digitalWrite(SDA_Pin, LOW);
+    delayMicroseconds(3);
+    digitalWrite(SCL_Pin, HIGH);
+    delayMicroseconds(3);
+    digitalWrite(SDA_Pin, HIGH);
+    delayMicroseconds(3);
+}
+
+
+
+
+//*******************************************************
 ```
 
 # Bill of Materials
