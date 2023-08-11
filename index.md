@@ -1,4 +1,4 @@
-# Project Name Here
+# Mini Tank RC with LED Panel
 Replace this text with a brief description (2-3 sentences) of your project. This description should draw the reader in and make them interested in what you've built. You can include what the biggest challenges, takeaways, and triumphs from completing the project were. As you complete your portfolio, remember your audience is less familiar than you are with all that your project entails!
 
 You should comment out all portions of your portfolio that you have not completed yet, as well as any instructions:
@@ -21,11 +21,7 @@ You should comment out all portions of your portfolio that you have not complete
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/F7M7imOVGug" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
-For your final milestone, explain the outcome of your project. Key details to include are:
-- What you've accomplished since your previous milestone
-- What your biggest challenges and triumphs were at BSE
-- A summary of key topics you learned about
-- What you hope to learn in the future after everything you've learned at BSE
+For my third milestone, I worked on getting the LED panel to work with the IR remote to display patterns once a button is clicked. I managed to accomplish this challenge by using the LED panel test code given in the documentation and tweaking it for my needs with the RC Tank and I had added more statements alongside new long variables to store the hexadecimal input from the IR remote and another variable to store the pattern with them being used in if statements for when a certain button is clicked. Throughout all this succeeded I have faced challenges and succeeded in which one of these challenges would have to be the ir reciever wire being incorrectly for the solution to be that I had to take it out. flip it and then place it back. Another would have to be the long data type as it was foreign to me as, from my prior experience, there wasn't a huge focus on how huge the number should be and, since these remote IR inputs are in hexadecimal, which are huge numbers, using the regular `int` wouldn't work. Throughout all this I got to learn what it was like to be an engineer assembling with some parts having to be put together in a way I didn't expect, like the tank treads needing more force than I expected on the software side, in which I learned another part of programming was prior to coming to bluestamp the only experience I have is with web development and programming between that and working with the arudino is different as shown from what I had said before with the data type but I am happy that I got to learn that as there might be a time where I'll have to learn C++ and learning the arduino which is based off the C++ syntax helps. For the future, I hope I can apply many of these things to other ventures and I hope to learn more of what I'm passionate about as I am to go outside of what I am familar with and I left off with stuff I enjoyed about it familiar which was the software aspect which I want to further myself in. 
 
 
 
