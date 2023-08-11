@@ -1,11 +1,12 @@
 # Mini Tank RC with LED Panel
-Replace this text with a brief description (2-3 sentences) of your project. This description should draw the reader in and make them interested in what you've built. You can include what the biggest challenges, takeaways, and triumphs from completing the project were. As you complete your portfolio, remember your audience is less familiar than you are with all that your project entails!
+Hello, this is a RC Tank with an LED panel functionality that I built in which I faced many problems and went above them throughout my three weeks at BlueStamp. At first it was assemblying the parts like the threads, wheels, motors, and the arduino with things like locknuts and screws. Later on after 
+assembling I worked on the programming side in order to get the tank to allow inputs from a remote so that it can move and even show patterns on the led panel on the front of the tank
 
-You should comment out all portions of your portfolio that you have not completed yet, as well as any instructions:
+<!-- You should comment out all portions of your portfolio that you have not completed yet, as well as any instructions:
 ```HTML 
 <!--- This is an HTML comment in Markdown -->
 <!--- Anything between these symbols will not render on the published site -->
-```
+<!-- ``` --> 
 
 | **Engineer** | **School** | **Area of Interest** | **Grade** |
 |:--:|:--:|:--:|:--:|
